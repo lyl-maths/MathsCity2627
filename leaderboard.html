@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>🏆 魔法學園 Maths Dollars 排行榜 🏰</title>
   <style>
     :root {
@@ -16,20 +16,44 @@
     }
 
     html, body {
-      height: 100vh;
       margin: 0;
       padding: 0;
-      overflow: hidden;
       background: var(--bg-gradient);
       background-attachment: fixed;
       color: #f8fafc;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       box-sizing: border-box;
+      min-height: 100vh;
+    }
+
+    /* 桌面版預設大螢幕高滿版 */
+    @media (min-width: 769px) {
+      html, body {
+        height: 100vh;
+        overflow: hidden;
+      }
+      .container {
+        height: 100vh;
+      }
+      .split-grid {
+        flex: 1;
+        min-height: 0;
+      }
+    }
+
+    /* 手機版允許全頁滑動 */
+    @media (max-width: 768px) {
+      html, body {
+        height: auto;
+        overflow-y: auto;
+      }
+      .container {
+        height: auto !important;
+      }
     }
 
     .container {
       max-width: 1800px;
-      height: 100vh;
       margin: 0 auto;
       padding: 12px 16px;
       display: flex;
@@ -40,20 +64,23 @@
     .nav-bar {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 8px;
       margin-bottom: 10px;
       flex-shrink: 0;
     }
     .nav-btn {
-      padding: 8px 16px;
+      flex: 1;
+      text-align: center;
+      padding: 8px 10px;
       background: rgba(51, 65, 85, 0.8);
       color: #94a3b8;
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       border: 1px solid var(--card-border);
       backdrop-filter: blur(8px);
+      white-space: nowrap;
     }
     .nav-btn.active {
       background: #0284c7;
@@ -64,49 +91,57 @@
 
     header { flex-shrink: 0; text-align: center; margin-bottom: 10px; }
     header h1 {
-      font-size: 2.2rem; color: var(--primary-blue); margin: 0;
-      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4); letter-spacing: 2px;
+      font-size: 1.8rem; color: var(--primary-blue); margin: 0;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4); letter-spacing: 1px;
     }
 
     .dashboard-houses {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 12px; flex-shrink: 0; text-align: center;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; flex-shrink: 0; text-align: center;
     }
     .house-card {
-      padding: 12px; border-radius: 14px; box-shadow: 0 6px 16px rgba(0,0,0,0.3); color: white;
+      padding: 10px 6px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); color: white;
     }
     .house-card.yuanman { background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); border: 1px solid #f87171; }
     .house-card.sansi { background: linear-gradient(135deg, #92400e 0%, #d97706 100%); border: 1px solid #fbbf24; }
     .house-card.fangcun { background: linear-gradient(135deg, #065f46 0%, #059669 100%); border: 1px solid #34d399; }
-    .house-title { font-size: 1.2rem; font-weight: 800; }
-    .house-score { font-size: 2.6rem; font-weight: 900; margin-top: 4px; }
+    .house-title { font-size: 0.95rem; font-weight: 800; }
+    .house-score { font-size: 1.8rem; font-weight: 900; margin-top: 2px; }
 
     .split-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; min-height: 0; margin-bottom: 8px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px;
     }
+    @media (max-width: 768px) {
+      .split-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .zone-a { display: flex; flex-direction: column; gap: 12px; height: 100%; min-height: 0; }
     .zone-a .card { flex: 1; min-height: 0; }
 
     .card {
       background: var(--card-bg); padding: 14px 16px; border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4); border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px); display: flex; flex-direction: column; height: 100%; box-sizing: border-box; min-height: 0;
+      backdrop-filter: blur(12px); display: flex; flex-direction: column; box-sizing: border-box; min-height: 0;
     }
     .card h2 {
-      font-size: 1.2rem; margin-top: 0; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.15rem; margin-top: 0; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 8px; color: var(--primary-blue); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+      flex-wrap: wrap; gap: 8px;
     }
 
-    .table-scroll-area { flex: 1; overflow-y: auto; min-height: 0; }
+    .table-scroll-area { flex: 1; overflow-y: auto; overflow-x: auto; min-height: 0; }
 
-    table { width: 100%; border-collapse: collapse; }
+    table { width: 100%; border-collapse: collapse; min-width: 280px; }
     
     th {
-      background-color: #090d16; color: var(--primary-blue); font-size: 1.1rem; padding: 10px 8px;
+      background-color: #090d16; color: var(--primary-blue); font-size: 0.95rem; padding: 8px 6px;
       text-align: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      white-space: nowrap;
     }
-    td { padding: 10px 8px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 1.15rem; font-weight: 600; }
+    td { padding: 8px 6px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.95rem; font-weight: 600; }
 
-    select { background: #0f172a; color: white; border: 1px solid #334155; padding: 6px 10px; border-radius: 6px; font-size: 0.9rem; }
+    select { background: #0f172a; color: white; border: 1px solid #334155; padding: 6px 8px; border-radius: 6px; font-size: 0.85rem; max-width: 100%; }
 
     .rank-controls {
       display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; background: rgba(15, 23, 42, 0.8);
@@ -114,11 +149,11 @@
     }
     .btn-group-row { display: flex; gap: 8px; justify-content: center; }
     .btn-main-metric {
-      flex: 1; padding: 10px 6px; background: #0f172a; color: #94a3b8; border: 1px solid #334155;
-      border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;
+      flex: 1; padding: 8px 4px; background: #0f172a; color: #94a3b8; border: 1px solid #334155;
+      border-radius: 8px; font-size: 0.85rem; font-weight: bold; cursor: pointer; white-space: nowrap;
     }
     .btn-main-metric.active { background: #0284c7; color: #ffffff; border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
-    .btn-time-range { padding: 6px 16px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
+    .btn-time-range { padding: 6px 12px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
     .btn-time-range.active { background: #fbbf24; color: #0f172a; border-color: #fbbf24; }
 
     .text-yuanman { color: var(--color-yuanman); font-weight: bold; }
@@ -130,9 +165,9 @@
 
 <div class="container">
   <div class="nav-bar">
-    <a href="leaderboard.html" class="nav-btn active">🏰 魔法學園 Maths Dollars 排行榜 🔮</a>
-    <a href="index.html" class="nav-btn">🏰 魔法學園：Maths Dollars 管理系統 🔮</a>
-    <a href="analytics.html" class="nav-btn">🏰 魔法學徒數據查詢 📊</a>
+    <a href="leaderboard.html" class="nav-btn active">🏆 排行榜</a>
+    <a href="index.html" class="nav-btn">🔮 管理系統</a>
+    <a href="analytics.html" class="nav-btn">📊 數據查詢</a>
   </div>
 
   <header>
@@ -141,15 +176,15 @@
 
   <div class="dashboard-houses">
     <div class="house-card yuanman">
-      <div class="house-title">🔴 圓滿角 (全年總分)</div>
+      <div class="house-title">🔴 圓滿角</div>
       <div class="house-score" id="scoreYuanman">$0</div>
     </div>
     <div class="house-card sansi">
-      <div class="house-title">🟡 三思角 (全年總分)</div>
+      <div class="house-title">🟡 三思角</div>
       <div class="house-score" id="scoreSansi">$0</div>
     </div>
     <div class="house-card fangcun">
-      <div class="house-title">🟢 方寸角 (全年總分)</div>
+      <div class="house-title">🟢 方寸角</div>
       <div class="house-score" id="scoreFangcun">$0</div>
     </div>
   </div>
@@ -157,7 +192,7 @@
   <div class="split-grid">
     <div class="zone-a">
       <div class="card">
-        <h2>🎯 活動項目魔法社系 Maths Dollars 列表</h2>
+        <h2>🎯 活動項目魔法社系分表</h2>
         <div class="table-scroll-area">
           <table>
             <thead>
@@ -171,15 +206,15 @@
       <div class="card">
         <h2>
           <span>📅 即時月份結算</span>
-          <div>
-            <select id="monthlyActivitySelect" onchange="renderMonthlyData()"><option value="ALL">所有活動項目</option></select>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;">
+            <select id="monthlyActivitySelect" onchange="renderMonthlyData()"><option value="ALL">所有活動</option></select>
             <select id="monthSelect" onchange="renderMonthlyData()"></select>
           </div>
         </h2>
         <div class="table-scroll-area">
           <table>
             <thead>
-              <tr><th>名次</th><th>學生姓名</th><th>魔法社系</th><th>Maths Dollars</th></tr>
+              <tr><th>名次</th><th>學生姓名</th><th>社系</th><th>Maths Dollars</th></tr>
             </thead>
             <tbody id="monthlyRankTable"></tbody>
           </table>
@@ -187,14 +222,14 @@
       </div>
     </div>
 
-    <div class="zone-b" style="height: 100%;">
+    <div class="zone-b">
       <div class="card">
-        <h2>🏆 魔法學徒 Top 10 排行榜</h2>
+        <h2>🏆 Top 10 榮譽榜</h2>
 
         <div class="rank-controls">
           <div class="btn-group-row">
-            <button type="button" id="btnMetricScore" class="btn-main-metric active" onclick="switchMetricMode('score')">💰 存款額 Top 10 學生</button>
-            <button type="button" id="btnMetricActive" class="btn-main-metric" onclick="switchMetricMode('active')">⚡ 最活躍 Top 10 學生</button>
+            <button type="button" id="btnMetricScore" class="btn-main-metric active" onclick="switchMetricMode('score')">💰 存款額 Top 10</button>
+            <button type="button" id="btnMetricActive" class="btn-main-metric" onclick="switchMetricMode('active')">⚡ 最活躍 Top 10</button>
           </div>
           <div class="btn-group-row">
             <button type="button" id="btnTimeMonthly" class="btn-time-range active" onclick="switchTimeMode('monthly')">📅 本月</button>
@@ -208,8 +243,8 @@
               <tr>
                 <th>名次</th>
                 <th>班別</th>
-                <th>學生姓名</th>
-                <th>魔法社系</th>
+                <th>姓名</th>
+                <th>社系</th>
                 <th id="thMetricTitle">Maths Dollars</th>
               </tr>
             </thead>
@@ -253,7 +288,7 @@
   function updateActivityDropdown() {
     const select = document.getElementById('monthlyActivitySelect');
     const cur = select.value;
-    select.innerHTML = '<option value="ALL">所有活動項目</option>';
+    select.innerHTML = '<option value="ALL">所有活動</option>';
     activitiesList.forEach(a => {
       const actName = (typeof a === 'object') ? a.name : a;
       const actType = (typeof a === 'object' && a.type) ? ` (${a.type})` : '';
@@ -282,7 +317,7 @@
 
     select.innerHTML = '';
     sortedMonths.forEach(m => {
-      select.innerHTML += `<option value="${m}">${m} 整月結算</option>`;
+      select.innerHTML += `<option value="${m}">${m} 月結算</option>`;
     });
 
     if (sortedMonths.includes(curValue)) select.value = curValue;
@@ -341,12 +376,12 @@
     const tbody = document.getElementById('activitySummaryTable');
     tbody.innerHTML = '';
     Object.keys(stats).forEach(a => {
-      const typeTag = stats[a].type ? `(${stats[a].type})` : '(魔法社系修煉)';
+      const typeTag = stats[a].type ? `(${stats[a].type})` : '(社系)';
       tbody.innerHTML += `
         <tr>
           <td>
-            <div style="font-size: 1.05rem; font-weight: bold;">${a}</div>
-            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 2px;">${typeTag}</div>
+            <div style="font-size: 0.95rem; font-weight: bold;">${a}</div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">${typeTag}</div>
           </td>
           <td class="text-yuanman">$${stats[a].yuanman}</td>
           <td class="text-sansi">$${stats[a].sansi}</td>
@@ -394,7 +429,7 @@
     tbody.innerHTML = '';
 
     if (sorted.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: #94a3b8;">本月份無資料</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: #94a3b8;">本月無資料</td></tr>';
       return;
     }
 
@@ -467,14 +502,14 @@
     const activeListWithVal = top10List.filter(x => (currentMetric === 'score' ? x.totalScore > 0 : x.activeCount > 0));
 
     if (activeListWithVal.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #94a3b8;">無相關資料</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #94a3b8;">無資料</td></tr>';
       return;
     }
 
     activeListWithVal.forEach((item, idx) => {
       const displayValue = (currentMetric === 'score') 
         ? `<strong>$${item.totalScore}</strong>` 
-        : `<strong style="color: #38bdf8;">${item.activeCount} 次</strong>`;
+        : `<strong style="color: #38bdf8;">${item.activeCount}次</strong>`;
 
       tbody.innerHTML += `
         <tr>
@@ -488,9 +523,9 @@
   }
 
   function getHouseDisplayName(h) {
-    if (h === '圓滿角') return '🔴 圓滿角';
-    if (h === '三思角') return '🟡 三思角';
-    if (h === '方寸角') return '🟢 方寸角';
+    if (h === '圓滿角') return '🔴 圓滿';
+    if (h === '三思角') return '🟡 三思';
+    if (h === '方寸角') return '🟢 方寸';
     return h || '';
   }
 
