@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🏰 魔法學徒數據查詢 📊</title>
+  <title>🏆 魔法學園 Maths Dollars 排行榜 🏰</title>
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0f172a 70%, #020617 100%);
@@ -15,90 +15,78 @@
       --primary-blue: #38bdf8;
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: var(--bg-gradient);
-      background-attachment: fixed;
-      margin: 0;
-      padding: 16px 16px 80px 16px;
-      color: #f8fafc;
-      min-height: 100vh;
-      box-sizing: border-box;
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg-gradient); background-attachment: fixed;
+      color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      box-sizing: border-box; min-height: 100vh;
+    }
+
+    /* 桌面/iPad 大螢幕滿版體驗 */
+    @media (min-width: 769px) {
+      html, body { height: 100vh; overflow: hidden; }
+      .container { height: 100vh; }
+      .split-grid { flex: 1; min-height: 0; }
     }
 
     .container {
-      max-width: 1800px;
-      width: 100%;
-      margin: 0 auto;
+      max-width: 1800px; margin: 0 auto; padding: 12px 16px;
+      display: flex; flex-direction: column; box-sizing: border-box;
     }
 
-    /* 頂部導覽（電腦/iPad） */
-    .nav-bar {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
+    /* 電腦/iPad 頂部導覽 */
+    .nav-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; flex-shrink: 0; }
     .nav-btn {
-      flex: 1; min-width: 160px; text-align: center; padding: 12px 14px;
-      background: rgba(51, 65, 85, 0.8); color: #94a3b8; text-decoration: none;
-      border-radius: 10px; font-weight: bold; font-size: 1rem; border: 1px solid var(--card-border);
-      backdrop-filter: blur(8px);
+      padding: 8px 16px; background: rgba(51, 65, 85, 0.8); color: #94a3b8; text-decoration: none;
+      border-radius: 8px; font-weight: bold; font-size: 0.95rem; border: 1px solid var(--card-border); backdrop-filter: blur(8px);
     }
-    .nav-btn.active {
-      background: #0284c7; color: white; border-color: var(--primary-blue);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+    .nav-btn.active { background: #0284c7; color: white; border-color: var(--primary-blue); box-shadow: 0 0 12px rgba(56, 189, 248, 0.35); }
+
+    header { flex-shrink: 0; text-align: center; margin-bottom: 10px; }
+    header h1 { font-size: 1.8rem; color: var(--primary-blue); margin: 0; text-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+
+    .dashboard-houses { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; flex-shrink: 0; text-align: center; }
+    .house-card { padding: 10px 6px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); color: white; }
+    .house-card.yuanman { background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); border: 1px solid #f87171; }
+    .house-card.sansi { background: linear-gradient(135deg, #92400e 0%, #d97706 100%); border: 1px solid #fbbf24; }
+    .house-card.fangcun { background: linear-gradient(135deg, #065f46 0%, #059669 100%); border: 1px solid #34d399; }
+    .house-title { font-size: 0.95rem; font-weight: 800; }
+    .house-score { font-size: 1.8rem; font-weight: 900; margin-top: 2px; }
+
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
+
+    .zone-a { display: flex; flex-direction: column; gap: 12px; height: 100%; min-height: 0; }
+    .zone-a .card { flex: 1; min-height: 0; }
+
+    .card {
+      background: var(--card-bg); padding: 14px 16px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border: 1px solid var(--card-border); backdrop-filter: blur(12px); display: flex; flex-direction: column; box-sizing: border-box; min-height: 0;
+    }
+    .card h2 {
+      font-size: 1.15rem; margin-top: 0; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 8px; color: var(--primary-blue); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; flex-wrap: wrap; gap: 8px;
     }
 
-    /* 頂部社系卡 */
-    .dashboard-houses {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; text-align: center;
+    .table-scroll-area { flex: 1; overflow-y: auto; overflow-x: auto; min-height: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 280px; }
+    th {
+      background-color: #090d16; color: var(--primary-blue); font-size: 0.95rem; padding: 8px 6px;
+      text-align: center; position: sticky; top: 0; z-index: 10; white-space: nowrap;
     }
-    .house-stat-card {
-      padding: 16px 10px; border-radius: 16px; box-shadow: 0 6px 16px rgba(0,0,0,0.3); color: white;
+    td { padding: 8px 6px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.95rem; font-weight: 600; }
+
+    select { background: #0f172a; color: white; border: 1px solid #334155; padding: 6px 8px; border-radius: 6px; font-size: 0.85rem; max-width: 100%; }
+
+    /* Top 10 控制項 */
+    .rank-controls {
+      display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; background: rgba(15, 23, 42, 0.8);
+      padding: 10px; border-radius: 10px; flex-shrink: 0; border: 1px solid var(--card-border);
     }
-    .house-stat-card.yuanman { background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); border: 1px solid #f87171; }
-    .house-stat-card.sansi { background: linear-gradient(135deg, #92400e 0%, #d97706 100%); border: 1px solid #fbbf24; }
-    .house-stat-card.fangcun { background: linear-gradient(135deg, #065f46 0%, #059669 100%); border: 1px solid #34d399; }
-    .house-stat-title { font-size: 1rem; font-weight: 800; }
-    .house-stat-value { font-size: 2.2rem; font-weight: 900; margin-top: 4px; }
-
-    .card { 
-      background: var(--card-bg); padding: 20px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); 
-      margin-bottom: 24px; border: 1px solid var(--card-border); backdrop-filter: blur(12px);
-    }
-    .card h2 { 
-      font-size: 1.3rem; margin-top: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-      padding-bottom: 12px; margin-bottom: 16px; color: var(--primary-blue);
-    }
-
-    .filter-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-    select, input {
-      padding: 12px 14px; background: #0f172a; color: #f8fafc; border: 1px solid #334155;
-      border-radius: 10px; flex: 1; min-width: 140px; font-size: 0.95rem; font-weight: 600;
-    }
-
-    .table-container {
-      max-height: 65vh; overflow-y: auto; overflow-x: auto; border: 1px solid var(--card-border);
-      border-radius: 14px; background: rgba(15, 23, 42, 0.6);
-    }
-
-    table { width: 100%; border-collapse: collapse; min-width: 480px; }
-    th { 
-      background: #090d16; color: #38bdf8; font-weight: 800; padding: 14px 10px; 
-      border-bottom: 2px solid #334155; text-align: center; font-size: 1rem; position: sticky; top: 0; z-index: 10;
-    }
-    td { padding: 12px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); text-align: center; font-size: 0.95rem; }
-
-    tbody tr:nth-child(odd) { background-color: rgba(30, 41, 59, 0.4); }
-    tbody tr:nth-child(even) { background-color: rgba(15, 23, 42, 0.6); }
-
-    .student-name-cell { font-size: 1.1rem; font-weight: 800; }
-
-    .text-yuanman { color: var(--color-yuanman); }
-    .text-sansi { color: var(--color-sansi); }
-    .text-fangcun { color: var(--color-fangcun); }
+    .btn-group-row { display: flex; gap: 8px; justify-content: center; }
+    .btn-main-metric { flex: 1; padding: 8px 4px; background: #0f172a; color: #94a3b8; border: 1px solid #334155; border-radius: 8px; font-size: 0.85rem; font-weight: bold; cursor: pointer; white-space: nowrap; }
+    .btn-main-metric.active { background: #0284c7; color: #ffffff; border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+    .btn-time-range { padding: 6px 12px; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
+    .btn-time-range.active { background: #fbbf24; color: #0f172a; border-color: #fbbf24; }
 
     /* 手機 APP 固定底部導覽列 */
     .mobile-bottom-nav {
@@ -113,74 +101,122 @@
     .mobile-nav-item.active { color: var(--primary-blue); }
     .mobile-nav-icon { font-size: 1.2rem; }
 
+    /* 手機版適應規則 */
     @media (max-width: 768px) {
-      body { padding-bottom: 75px; }
+      body { padding-bottom: 75px; height: auto; overflow-y: auto; }
+      .container { height: auto !important; }
+      .split-grid { grid-template-columns: 1fr; }
       .nav-bar { display: none; }
       .mobile-bottom-nav { display: flex; }
-      .house-stat-value { font-size: 1.5rem; }
+      .house-score { font-size: 1.5rem; }
     }
+
+    .text-yuanman { color: var(--color-yuanman); font-weight: bold; }
+    .text-sansi { color: var(--color-sansi); font-weight: bold; }
+    .text-fangcun { color: var(--color-fangcun); font-weight: bold; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- 電腦/iPad 頂部導覽 -->
+  <!-- 電腦/iPad 頂部導覽列 -->
   <div class="nav-bar">
-    <a href="leaderboard.html" class="nav-btn">🏰 魔法學園 Maths Dollars 排行榜 🔮</a>
-    <a href="index.html" class="nav-btn">🏰 魔法學園：Maths Dollars 管理系統 🔮</a>
-    <a href="analytics.html" class="nav-btn active">🏰 魔法學徒數據查詢 📊</a>
+    <a href="leaderboard.html" class="nav-btn active">🏆 排行榜</a>
+    <a href="index.html" class="nav-btn">🔮 管理系統</a>
+    <a href="analytics.html" class="nav-btn">📊 數據查詢</a>
   </div>
+
+  <header>
+    <h1>🏰 魔法學園 Maths Dollars 排行榜 🔮</h1>
+  </header>
 
   <div class="dashboard-houses">
-    <div class="house-stat-card yuanman">
-      <div class="house-stat-title">🔴 圓滿角</div>
-      <div class="house-stat-value" id="scoreYuanman">$0</div>
+    <div class="house-card yuanman">
+      <div class="house-title">🔴 圓滿角</div>
+      <div class="house-score" id="scoreYuanman">$0</div>
     </div>
-    <div class="house-stat-card sansi">
-      <div class="house-stat-title">🟡 三思角</div>
-      <div class="house-stat-value" id="scoreSansi">$0</div>
+    <div class="house-card sansi">
+      <div class="house-title">🟡 三思角</div>
+      <div class="house-score" id="scoreSansi">$0</div>
     </div>
-    <div class="house-stat-card fangcun">
-      <div class="house-stat-title">🟢 方寸角</div>
-      <div class="house-stat-value" id="scoreFangcun">$0</div>
+    <div class="house-card fangcun">
+      <div class="house-title">🟢 方寸角</div>
+      <div class="house-score" id="scoreFangcun">$0</div>
     </div>
   </div>
 
-  <div class="card">
-    <h2>📊 魔法學徒成班成績明細名冊</h2>
-    
-    <div class="filter-bar">
-      <select id="classFilter" onchange="renderTable()"><option value="ALL">所有班別</option></select>
-      <select id="houseFilter" onchange="renderTable()">
-        <option value="ALL">所有魔法社系</option>
-        <option value="圓滿角">🔴 圓滿角</option>
-        <option value="三思角">🟡 三思角</option>
-        <option value="方寸角">🟢 方寸角</option>
-      </select>
-      <input type="text" id="searchInput" placeholder="搜尋姓名..." onkeyup="renderTable()">
+  <div class="split-grid">
+    <!-- Zone A: 社系分表與月份結算 -->
+    <div class="zone-a">
+      <div class="card">
+        <h2>🎯 活動項目魔法社系分表</h2>
+        <div class="table-scroll-area">
+          <table>
+            <thead>
+              <tr><th>活動名稱</th><th>🔴 圓滿角</th><th>🟡 三思角</th><th>🟢 方寸角</th></tr>
+            </thead>
+            <tbody id="activitySummaryTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>
+          <span>📅 即時月份結算</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;">
+            <select id="monthlyActivitySelect" onchange="renderMonthlyData()"><option value="ALL">所有活動</option></select>
+            <select id="monthSelect" onchange="renderMonthlyData()"></select>
+          </div>
+        </h2>
+        <div class="table-scroll-area">
+          <table>
+            <thead>
+              <tr><th>名次</th><th>姓名</th><th>社系</th><th>Maths Dollars</th></tr>
+            </thead>
+            <tbody id="monthlyRankTable"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>班別</th>
-            <th>學生姓名</th>
-            <th>魔法社系</th>
-            <th>個人分數</th>
-            <th>社系分數</th>
-            <th>總累積分數</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
+    <!-- Zone B: ★ Top 10 榮譽榜 ★ -->
+    <div class="zone-b">
+      <div class="card">
+        <h2>🏆 Top 10 榮譽榜</h2>
+
+        <div class="rank-controls">
+          <div class="btn-group-row">
+            <button type="button" id="btnMetricScore" class="btn-main-metric active" onclick="switchMetricMode('score')">💰 存款額 Top 10</button>
+            <button type="button" id="btnMetricActive" class="btn-main-metric" onclick="switchMetricMode('active')">⚡ 最活躍 Top 10</button>
+          </div>
+          <div class="btn-group-row">
+            <button type="button" id="btnTimeMonthly" class="btn-time-range active" onclick="switchTimeMode('monthly')">📅 本月</button>
+            <button type="button" id="btnTimeYearly" class="btn-time-range" onclick="switchTimeMode('yearly')">🏆 全年</button>
+          </div>
+        </div>
+
+        <div class="table-scroll-area">
+          <table>
+            <thead>
+              <tr>
+                <th>名次</th>
+                <th>班別</th>
+                <th>姓名</th>
+                <th>社系</th>
+                <th id="thMetricTitle">Maths Dollars</th>
+              </tr>
+            </thead>
+            <tbody id="top10Tbody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 手機 APP 固定底部導覽列 -->
+<!-- 手機固定底部導覽列 -->
 <div class="mobile-bottom-nav">
-  <a href="leaderboard.html" class="mobile-nav-item">
+  <a href="leaderboard.html" class="mobile-nav-item active">
     <span class="mobile-nav-icon">🏆</span>
     <span>排行榜</span>
   </a>
@@ -188,7 +224,7 @@
     <span class="mobile-nav-icon">🔮</span>
     <span>管理系統</span>
   </a>
-  <a href="analytics.html" class="mobile-nav-item active">
+  <a href="analytics.html" class="mobile-nav-item">
     <span class="mobile-nav-icon">📊</span>
     <span>數據查詢</span>
   </a>
@@ -198,24 +234,88 @@
   const API_URL = 'https://script.google.com/macros/s/AKfycbyGOmPnJSBM5BbN2oIdpoMSYuEJW4rtAXsAC1rJRuHEzTgo3L6s2Yd1Nqzy1L_j_BMM/exec';
 
   let studentDatabase = [];
+  let activitiesList = [];
   let scoreRecords = [];
 
-  window.onload = async function() {
+  let currentMetric = 'score';
+  let currentTimeRange = 'monthly';
+
+  window.onload = function() {
+    loadCloudData();
+    setInterval(loadCloudData, 10000);
+  };
+
+  async function loadCloudData() {
     try {
       const res = await fetch(API_URL);
       const data = await res.json();
       studentDatabase = data.students || [];
+      activitiesList = data.activities || [];
       scoreRecords = data.scores || [];
 
-      const classes = [...new Set(studentDatabase.map(s => s.className).filter(Boolean))].sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
-      const selectFilter = document.getElementById('classFilter');
-      selectFilter.innerHTML = '<option value="ALL">所有班別</option>';
-      classes.forEach(c => selectFilter.innerHTML += `<option value="${c}">${c}</option>`);
-
-      renderHouseDashboard();
-      renderTable();
+      updateActivityDropdown();
+      updateMonthDropdown();
+      renderAll();
     } catch (err) {}
-  };
+  }
+
+  function updateActivityDropdown() {
+    const select = document.getElementById('monthlyActivitySelect');
+    const cur = select.value;
+    select.innerHTML = '<option value="ALL">所有活動</option>';
+    activitiesList.forEach(a => {
+      const actName = (typeof a === 'object') ? a.name : a;
+      const actType = (typeof a === 'object' && a.type) ? ` (${a.type})` : '';
+      select.innerHTML += `<option value="${actName}">${actName}${actType}</option>`;
+    });
+    if (cur) select.value = cur;
+  }
+
+  function updateMonthDropdown() {
+    const select = document.getElementById('monthSelect');
+    const monthsSet = new Set();
+    
+    const now = new Date();
+    const curMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    monthsSet.add(curMonthStr);
+
+    scoreRecords.forEach(r => {
+      if (r.timestamp) {
+        const parsedM = parseYearMonth(r.timestamp);
+        if (parsedM) monthsSet.add(parsedM);
+      }
+    });
+
+    const sortedMonths = Array.from(monthsSet).sort().reverse();
+    const curValue = select.value || curMonthStr;
+
+    select.innerHTML = '';
+    sortedMonths.forEach(m => {
+      select.innerHTML += `<option value="${m}">${m} 月結算</option>`;
+    });
+
+    if (sortedMonths.includes(curValue)) select.value = curValue;
+  }
+
+  function parseYearMonth(str) {
+    if (!str) return '';
+    const match = str.match(/(\d{4})[-/](\d{1,2})/);
+    if (match) {
+      return `${match[1]}-${match[2].padStart(2, '0')}`;
+    }
+    const d = new Date(str);
+    if (!isNaN(d.getTime())) {
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    }
+    return '';
+  }
+
+  function renderAll() {
+    renderHouseDashboard();
+    renderActivitySummary();
+    renderMonthlyData();
+    renderTop10Table();
+  }
 
   function renderHouseDashboard() {
     const totals = { '圓滿角': 0, '三思角': 0, '方寸角': 0 };
@@ -229,6 +329,41 @@
     document.getElementById('scoreFangcun').innerText = '$' + totals['方寸角'];
   }
 
+  function renderActivitySummary() {
+    const stats = {};
+    activitiesList.forEach(a => {
+      const name = (typeof a === 'object') ? a.name : a;
+      const type = (typeof a === 'object' && a.type) ? a.type : '魔法社系修煉';
+      stats[name] = { type, yuanman: 0, sansi: 0, fangcun: 0 };
+    });
+
+    scoreRecords.forEach(r => {
+      if (r.scoreType === 'house' || r.scoreType === 'both') {
+        if (!stats[r.activity]) stats[r.activity] = { type: '魔法社系修煉', yuanman: 0, sansi: 0, fangcun: 0 };
+        const val = Number(r.score) || 0;
+        if (r.house === '圓滿角') stats[r.activity].yuanman += val;
+        if (r.house === '三思角') stats[r.activity].sansi += val;
+        if (r.house === '方寸角') stats[r.activity].fangcun += val;
+      }
+    });
+
+    const tbody = document.getElementById('activitySummaryTable');
+    tbody.innerHTML = '';
+    Object.keys(stats).forEach(a => {
+      const typeTag = stats[a].type ? `(${stats[a].type})` : '(社系)';
+      tbody.innerHTML += `
+        <tr>
+          <td>
+            <div style="font-size: 0.95rem; font-weight: bold;">${a}</div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">${typeTag}</div>
+          </td>
+          <td class="text-yuanman">$${stats[a].yuanman}</td>
+          <td class="text-sansi">$${stats[a].sansi}</td>
+          <td class="text-fangcun">$${stats[a].fangcun}</td>
+        </tr>`;
+    });
+  }
+
   function isStudentMatch(recordStudentStr, studentObj) {
     if (!recordStudentStr || recordStudentStr === '陣營團體') return false;
     if (studentObj.id && recordStudentStr.includes(studentObj.id)) return true;
@@ -236,50 +371,128 @@
     return false;
   }
 
-  function renderTable() {
-    const cls = document.getElementById('classFilter').value;
-    const house = document.getElementById('houseFilter').value;
-    const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  function renderMonthlyData() {
+    const selectedMonth = document.getElementById('monthSelect').value;
+    const selectedAct = document.getElementById('monthlyActivitySelect').value;
 
-    let list = studentDatabase;
-    if (cls !== 'ALL') list = list.filter(s => s.className === cls);
-    if (house !== 'ALL') list = list.filter(s => s.house === house);
-    if (search !== '') list = list.filter(s => s.name.toLowerCase().includes(search) || s.id.toLowerCase().includes(search));
+    let filteredRecords = scoreRecords.filter(r => parseYearMonth(r.timestamp) === selectedMonth);
+    if (selectedAct !== 'ALL') {
+      filteredRecords = filteredRecords.filter(r => r.activity === selectedAct);
+    }
 
-    const totals = { '圓滿角': 0, '三思角': 0, '方寸角': 0 };
-    scoreRecords.forEach(r => {
-      if ((r.scoreType === 'house' || r.scoreType === 'both') && r.house && totals[r.house] !== undefined) {
-        totals[r.house] += Number(r.score) || 0;
+    const mStudentTotals = {};
+
+    filteredRecords.forEach(r => {
+      if (r.student && r.student !== '陣營團體') {
+        studentDatabase.forEach(s => {
+          if (isStudentMatch(r.student, s)) {
+            const displayName = s.name;
+            if (!mStudentTotals[displayName]) mStudentTotals[displayName] = { house: s.house, total: 0 };
+            mStudentTotals[displayName].total += Number(r.score) || 0;
+          }
+        });
       }
     });
 
-    const tbody = document.getElementById('tbody');
+    const sorted = Object.keys(mStudentTotals)
+      .map(k => ({ displayName: k, house: mStudentTotals[k].house, total: mStudentTotals[k].total }))
+      .sort((a,b) => b.total - a.total)
+      .slice(0, 5);
+
+    const tbody = document.getElementById('monthlyRankTable');
     tbody.innerHTML = '';
 
-    if (list.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="color: #94a3b8; padding: 20px;">查無符合條件之數據</td></tr>';
+    if (sorted.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: #94a3b8;">無資料</td></tr>';
       return;
     }
 
-    list.forEach(s => {
-      let indScore = 0;
-      scoreRecords.forEach(r => {
-        if (isStudentMatch(r.student, s) && r.scoreType !== 'house') {
-          indScore += Number(r.score) || 0;
-        }
-      });
+    sorted.forEach((item, idx) => {
+      tbody.innerHTML += `<tr><td>${idx+1}</td><td class="text-${getHouseKey(item.house)}">${item.displayName}</td><td>${getHouseDisplayName(item.house)}</td><td><strong>$${item.total}</strong></td></tr>`;
+    });
 
-      const houseScore = totals[s.house] || 0;
-      const totalAccumulated = indScore + houseScore;
+    if (currentTimeRange === 'monthly') renderTop10Table();
+  }
+
+  function switchMetricMode(metric) {
+    currentMetric = metric;
+    document.getElementById('btnMetricScore').classList.toggle('active', metric === 'score');
+    document.getElementById('btnMetricActive').classList.toggle('active', metric === 'active');
+    document.getElementById('thMetricTitle').innerText = (metric === 'score') ? 'Maths Dollars' : '獲獎次數';
+    renderTop10Table();
+  }
+
+  function switchTimeMode(timeRange) {
+    currentTimeRange = timeRange;
+    document.getElementById('btnTimeMonthly').classList.toggle('active', timeRange === 'monthly');
+    document.getElementById('btnTimeYearly').classList.toggle('active', timeRange === 'yearly');
+    renderTop10Table();
+  }
+
+  /* ★ 計算與渲染 Top 10 表格 ★ */
+  function renderTop10Table() {
+    const selectedMonth = document.getElementById('monthSelect').value;
+
+    let targetRecords = scoreRecords;
+    if (currentTimeRange === 'monthly' && selectedMonth) {
+      targetRecords = scoreRecords.filter(r => parseYearMonth(r.timestamp) === selectedMonth);
+    }
+
+    const studentStats = new Map();
+
+    studentDatabase.forEach(s => {
+      studentStats.set(s.id, {
+        student: s,
+        totalScore: 0,
+        activeCount: 0
+      });
+    });
+
+    targetRecords.forEach(r => {
+      if (r.student && r.student !== '陣營團體' && r.scoreType !== 'house') {
+        studentDatabase.forEach(s => {
+          if (isStudentMatch(r.student, s)) {
+            const stat = studentStats.get(s.id);
+            if (stat) {
+              stat.totalScore += Number(r.score) || 0;
+              stat.activeCount += 1;
+            }
+          }
+        });
+      }
+    });
+
+    const statsArray = Array.from(studentStats.values());
+
+    if (currentMetric === 'score') {
+      statsArray.sort((a,b) => b.totalScore - a.totalScore);
+    } else {
+      statsArray.sort((a,b) => b.activeCount - a.activeCount);
+    }
+
+    const top10List = statsArray.slice(0, 10);
+    const tbody = document.getElementById('top10Tbody');
+    tbody.innerHTML = '';
+
+    const activeListWithVal = top10List.filter(x => (currentMetric === 'score' ? x.totalScore > 0 : x.activeCount > 0));
+
+    if (activeListWithVal.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #94a3b8;">無資料</td></tr>';
+      return;
+    }
+
+    activeListWithVal.forEach((item, idx) => {
+      const displayValue = (currentMetric === 'score') 
+        ? `<strong>$${item.totalScore}</strong>` 
+        : `<strong style="color: #38bdf8;">${item.activeCount}次</strong>`;
 
       tbody.innerHTML += `
         <tr>
-          <td><strong>${s.className}</strong></td>
-          <td class="student-name-cell text-${getHouseKey(s.house)}">${s.name}</td>
-          <td>${getHouseDisplayName(s.house)}</td>
-          <td>$${indScore}</td>
-          <td>$${houseScore}</td>
-          <td style="color: #38bdf8; font-weight: bold;">$${totalAccumulated}</td>
+          <td>${idx + 1}</td>
+          <td>${item.student.className}</td>
+          <td class="text-${getHouseKey(item.student.house)}">${item.student.name}</td>
+          <td>${getHouseDisplayName(item.student.house)}</td>
+          <td>${displayValue}</td>
         </tr>`;
     });
   }
