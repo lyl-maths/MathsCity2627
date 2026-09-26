@@ -16,7 +16,7 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background: var(--bg-gradient);
       background-attachment: fixed;
       margin: 0;
@@ -31,7 +31,6 @@
       margin: 0 auto;
     }
 
-    /* 頂部標題 */
     header { text-align: center; margin-bottom: 14px; }
     header h1 { margin: 4px 0; font-size: 1.5rem; color: var(--primary-blue); }
     
@@ -46,7 +45,9 @@
       border: 1px solid #fbbf24;
     }
 
-    /* 手機版三大社系總分縮小並排 */
+    .status-bar { text-align: center; font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+
+    /* 三大社系總分卡片 */
     .dashboard-houses {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -82,7 +83,7 @@
 
     .card {
       background: var(--card-bg); padding: 16px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      border: 1px solid var(--card-border); backdrop-filter: blur(12px); box-sizing: border-box;
+      border: 1px solid var(--card-border); backdrop-filter: blur(12px); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
     }
     .card h2 { font-size: 1.15rem; margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; color: var(--primary-blue); }
 
@@ -93,52 +94,59 @@
       width: 100%; padding: 12px 14px; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 10px; box-sizing: border-box; font-size: 1rem;
     }
 
-    /* ★ 專為手機優化的大按鈕快選區 */
+    /* 手機快選按鈕 */
     .quick-score-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-    .btn-quick { background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 14px 6px; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
+    .btn-quick { background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 12px 4px; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; }
     .btn-quick.minus { color: #f87171; background: #450a0a; border-color: #991b1b; }
 
-    /* 導師按鈕手感優化 */
+    /* 導師選擇 */
     .teacher-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
     .teacher-btn { padding: 12px 6px; border: 1px solid #334155; background: #0f172a; color: #cbd5e1; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; }
     .teacher-btn.selected { background: #0284c7; color: white; border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
 
-    button.submit-btn { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; min-height: 54px; font-size: 1.15rem; border-radius: 12px; margin-top: 16px; width: 100%; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+    .teacher-badge-status { margin-top: 8px; padding: 8px; background: rgba(2, 132, 199, 0.2); border: 1px dashed var(--primary-blue); border-radius: 8px; color: #38bdf8; font-size: 0.85rem; font-weight: bold; text-align: center; display: none; }
 
-    /* ★ 手機端 App 風格底部固定導覽列 */
+    /* 社系與學生選擇 */
+    .house-button-group { display: flex; gap: 8px; margin-top: 8px; }
+    .house-btn { flex: 1; padding: 12px 4px; border: 1px solid #334155; background: #0f172a; color: #94a3b8; border-radius: 10px; font-weight: bold; font-size: 0.9rem; cursor: pointer; }
+    .house-btn.selected.yuanman { background: #991b1b; color: white; border-color: #f87171; }
+    .house-btn.selected.sansi { background: #92400e; color: white; border-color: #fbbf24; }
+    .house-btn.selected.fangcun { background: #065f46; color: white; border-color: #34d399; }
+
+    .selected-students-zone {
+      display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px dashed #475569; border-radius: 10px; background: #0f172a; min-height: 42px; max-height: 120px; overflow-y: auto;
+    }
+    .pill-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 16px; font-size: 0.85rem; font-weight: bold; background: #334155; color: white; }
+    .pill-tag.yuanman { background: #991b1b; color: #fca5a5; }
+    .pill-tag.sansi { background: #92400e; color: #fde68a; }
+    .pill-tag.fangcun { background: #065f46; color: #a7f3d0; }
+    .pill-remove { cursor: pointer; background: rgba(0,0,0,0.3); border-radius: 50%; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+
+    .checkbox-list { max-height: 180px; overflow-y: auto; border: 1px solid #334155; border-radius: 10px; padding: 10px; background: #0f172a; }
+    .checkbox-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.95rem; }
+
+    .checkbox-type-group { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .checkbox-type-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; color: #f8fafc; cursor: pointer; }
+    .checkbox-type-item input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary-blue); }
+
+    button.submit-btn { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; min-height: 52px; font-size: 1.1rem; border-radius: 12px; margin-top: 16px; width: 100%; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+    .btn-add { background: #059669; color: white; border: none; font-weight: bold; cursor: pointer; min-height: 48px; font-size: 1rem; border-radius: 10px; margin-top: 12px; width: 100%; }
+    .btn-delete { background: #dc2626; color: white; font-weight: bold; border: none; min-height: 48px; font-size: 1rem; border-radius: 10px; margin-top: 12px; cursor: pointer; width: 100%; }
+
+    .btn-action-small { width: auto; padding: 6px 10px; font-size: 0.8rem; background: #334155; color: white; border-radius: 6px; border: 1px solid #475569; cursor: pointer; }
+
+    /* 手機 APP 底部導覽列 */
     .mobile-bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
-      background: rgba(15, 23, 42, 0.95);
-      border-top: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 999;
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
+      background: rgba(15, 23, 42, 0.95); border-top: 1px solid var(--card-border);
+      backdrop-filter: blur(16px); display: flex; justify-content: space-around; align-items: center; z-index: 999;
     }
     .mobile-nav-item {
-      flex: 1;
-      text-align: center;
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: bold;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
+      flex: 1; text-align: center; color: #94a3b8; text-decoration: none; font-size: 0.75rem; font-weight: bold;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
     }
-    .mobile-nav-item.active {
-      color: var(--primary-blue);
-    }
-    .mobile-nav-icon {
-      font-size: 1.3rem;
-    }
+    .mobile-nav-item.active { color: var(--primary-blue); }
+    .mobile-nav-icon { font-size: 1.2rem; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -146,6 +154,10 @@
     .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
     .modal-btn-confirm { background: #0284c7; color: white; border: none; font-weight: bold; padding: 12px; border-radius: 8px; flex: 1; }
     .modal-btn-cancel { background: #475569; color: white; border: none; font-weight: bold; padding: 12px; border-radius: 8px; flex: 1; }
+
+    .text-yuanman { color: var(--color-yuanman); font-weight: bold; }
+    .text-sansi { color: var(--color-sansi); font-weight: bold; }
+    .text-fangcun { color: var(--color-fangcun); font-weight: bold; }
   </style>
 </head>
 <body>
@@ -154,6 +166,7 @@
   <header>
     <h1>🏰 魔法學園：Maths Dollars 管理系統 🔮</h1>
     <div class="role-badge">🧙‍♂️ 執行政務導師專用</div>
+    <div class="status-bar" id="syncStatus">已與魔法學園系統同步...</div>
   </header>
 
   <div class="dashboard-houses">
@@ -171,11 +184,13 @@
     </div>
   </div>
 
+  <!-- 頂部頁籤 -->
   <div class="section-tabs">
-    <button type="button" class="tab-btn active" onclick="switchTab('tabScore')">📜 頒發與發放</button>
-    <button type="button" class="tab-btn" onclick="switchTab('tabActivity')">⚙️ 活動項目管理</button>
+    <button type="button" class="tab-btn active" onclick="switchTab('tabScore')">📜 頒發與發放 Maths Dollars</button>
+    <button type="button" class="tab-btn" onclick="switchTab('tabActivity')">⚙️ 活動項目管理 (新增/刪除)</button>
   </div>
 
+  <!-- 頁籤 1: 頒發與發放 Maths Dollars -->
   <div id="tabScore" class="tab-content active">
     <form id="scoreForm">
       <div class="grid-row">
@@ -201,10 +216,13 @@
               <button type="button" class="btn-quick minus" onclick="addScoreValue(-5)">-5</button>
               <button type="button" class="btn-quick minus" onclick="addScoreValue(-10)">-10</button>
             </div>
+            <div style="text-align: right; margin-top: 4px;">
+              <button type="button" class="btn-action-small" onclick="resetScoreValue()">歸零</button>
+            </div>
           </div>
 
           <div class="form-group">
-            <label>3. 執行政務導師認證</label>
+            <label>3. 執行政務之導師認證</label>
             <div class="teacher-grid">
               <button type="button" class="teacher-btn" onclick="selectTeacher('🔴 郭老師', this)">🔴 郭老師</button>
               <button type="button" class="teacher-btn" onclick="selectTeacher('🔴 周老師', this)">🔴 周老師</button>
@@ -213,12 +231,95 @@
               <button type="button" class="teacher-btn" onclick="selectTeacher('🟢 梁老師', this)">🟢 梁老師</button>
               <button type="button" class="teacher-btn" onclick="selectTeacher('🟢 湯老師', this)">🟢 湯老師</button>
             </div>
+            <div class="teacher-badge-status" id="teacherBadge">✨ 已獲導師印章簽署認證</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🎯 獲選之人</h2>
+
+          <div id="noActivityPrompt" style="color: #94a3b8; text-align: center; padding: 20px 0;">
+            👈 請先在左側選擇活動項目...
+          </div>
+
+          <div id="houseModeSection" style="display: none;">
+            <label>選擇魔法社系 (可多選)</label>
+            <div class="house-button-group">
+              <button type="button" class="house-btn yuanman" onclick="toggleHouseSelection('圓滿角', this)">🔴 圓滿角</button>
+              <button type="button" class="house-btn sansi" onclick="toggleHouseSelection('三思角', this)">🟡 三思角</button>
+              <button type="button" class="house-btn fangcun" onclick="toggleHouseSelection('方寸角', this)">🟢 方寸角</button>
+            </div>
+          </div>
+
+          <div id="studentModeSection" style="display: none;">
+            <div class="form-group">
+              <label>已選擇學生名單 (<span id="selectedCount">0</span> 人)</label>
+              <div class="selected-students-zone" id="selectedStudentsZone">
+                <span style="color: #64748b; font-size: 0.8rem;">尚未選擇任何學生...</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="classSelect">選擇班別</label>
+              <div style="display: flex; gap: 8px;">
+                <select id="classSelect" onchange="renderStudentCheckboxes()"><option value="">-- 請選擇班別 --</option></select>
+                <button type="button" class="btn-action-small" onclick="selectAllInClass()" style="white-space: nowrap;">全班全選</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>勾選學生</label>
+              <div class="checkbox-list" id="studentCheckboxContainer"><div style="color: #64748b;">請先選擇班別</div></div>
+            </div>
           </div>
         </div>
       </div>
 
       <button type="submit" id="submitScoreBtn" class="submit-btn">📜 簽署並頒發 Maths Dollars (需魔法數字)</button>
     </form>
+  </div>
+
+  <!-- 頁籤 2: 活動項目管理 (已完整復原) -->
+  <div id="tabActivity" class="tab-content">
+    <div class="grid-row">
+      <div class="card">
+        <h2>➕ 新增活動項目</h2>
+        <form id="addActivityForm">
+          <div class="form-group">
+            <label for="newActivityName">活動名稱</label>
+            <input type="text" id="newActivityName" placeholder="例如：數學遊蹤第一關" required>
+          </div>
+
+          <div class="form-group">
+            <label>活動類別</label>
+            <div class="checkbox-type-group">
+              <label class="checkbox-type-item">
+                <input type="radio" name="activityType" value="個人修煉" checked>
+                <span>👤 個人修煉</span>
+              </label>
+              <label class="checkbox-type-item">
+                <input type="radio" name="activityType" value="魔法社系修煉">
+                <span>🏰 魔法社系修煉</span>
+              </label>
+              <label class="checkbox-type-item">
+                <input type="radio" name="activityType" value="個人與魔法社系同步修煉">
+                <span>🌟 個人與魔法社系同步修煉</span>
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn-add">建立新活動 (需魔法數字)</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>🗑️ 管理與刪除活動項目</h2>
+        <div class="form-group">
+          <label for="deleteActivitySelect">選擇欲刪除的活動</label>
+          <select id="deleteActivitySelect"><option value="">-- 請選擇活動 --</option></select>
+        </div>
+        <button type="button" class="btn-delete" onclick="handleDeleteActivity()">刪除選取活動 (需魔法數字)</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -238,6 +339,7 @@
   </a>
 </div>
 
+<!-- 密碼驗證彈窗 -->
 <div class="modal-overlay" id="passwordModal">
   <div class="modal-card">
     <h3>🔒 導師安全驗證</h3>
@@ -257,6 +359,9 @@
   let studentDatabase = [];
   let activitiesList = [];
   let scoreRecords = [];
+
+  let selectedStudentsMap = new Map();
+  let selectedHousesSet = new Set();
   let selectedTeacherName = '';
   let passwordResolver = null;
 
@@ -266,6 +371,12 @@
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
+
+    if (tabId === 'tabScore') {
+      document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    } else {
+      document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    }
   }
 
   async function loadCloudData() {
@@ -277,8 +388,12 @@
       scoreRecords = data.scores || [];
 
       renderHouseDashboard();
+      renderClassDropdown();
       renderActivityDropdowns();
-    } catch (err) {}
+      document.getElementById('syncStatus').innerText = '✅ 已與魔法學園系統同步 (' + new Date().toLocaleTimeString() + ')';
+    } catch (err) {
+      document.getElementById('syncStatus').innerText = '❌ 同步失敗';
+    }
   }
 
   function renderHouseDashboard() {
@@ -299,19 +414,141 @@
     input.value = cur + delta;
   }
 
+  function resetScoreValue() { document.getElementById('scoreInput').value = 0; }
+
   function selectTeacher(tName, btn) {
     document.querySelectorAll('.teacher-btn').forEach(b => b.classList.remove('selected'));
     selectedTeacherName = tName;
     btn.classList.add('selected');
+
+    const badge = document.getElementById('teacherBadge');
+    badge.style.display = 'block';
+    badge.innerText = `✨ 已獲 [${tName}] 印章認證`;
+  }
+
+  function toggleHouseSelection(houseName, btn) {
+    if (selectedHousesSet.has(houseName)) {
+      selectedHousesSet.delete(houseName);
+      btn.classList.remove('selected');
+    } else {
+      selectedHousesSet.add(houseName);
+      btn.classList.add('selected');
+    }
+  }
+
+  function renderClassDropdown() {
+    const select = document.getElementById('classSelect');
+    const classes = [...new Set(studentDatabase.map(s => s.className).filter(Boolean))].sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+    select.innerHTML = '<option value="">-- 請選擇班別 --</option>';
+    classes.forEach(c => select.innerHTML += `<option value="${c}">${c}</option>`);
   }
 
   function renderActivityDropdowns() {
     const select = document.getElementById('activitySelect');
+    const delSelect = document.getElementById('deleteActivitySelect');
+
     select.innerHTML = '<option value="">-- 請選擇活動 --</option>';
+    delSelect.innerHTML = '<option value="">-- 請選擇活動 --</option>';
+
     activitiesList.forEach(a => {
       const actName = (typeof a === 'object') ? a.name : a;
-      select.innerHTML += `<option value="${actName}">${actName}</option>`;
+      const actType = (typeof a === 'object' && a.type) ? ` (${a.type})` : '';
+      const displayLabel = `${actName}${actType}`;
+
+      select.innerHTML += `<option value="${actName}">${displayLabel}</option>`;
+      delSelect.innerHTML += `<option value="${actName}">${displayLabel}</option>`;
     });
+  }
+
+  function onActivityChange() {
+    const actName = document.getElementById('activitySelect').value;
+    const noPrompt = document.getElementById('noActivityPrompt');
+    const houseSec = document.getElementById('houseModeSection');
+    const studentSec = document.getElementById('studentModeSection');
+
+    if (!actName) {
+      noPrompt.style.display = 'block';
+      houseSec.style.display = 'none';
+      studentSec.style.display = 'none';
+      return;
+    }
+
+    noPrompt.style.display = 'none';
+
+    const actObj = activitiesList.find(a => (typeof a === 'object' ? a.name : a) === actName);
+    const actType = (actObj && typeof actObj === 'object') ? actObj.type : '魔法社系修煉';
+
+    if (actType === '魔法社系修煉') {
+      houseSec.style.display = 'block';
+      studentSec.style.display = 'none';
+    } else {
+      houseSec.style.display = 'none';
+      studentSec.style.display = 'block';
+    }
+  }
+
+  function renderStudentCheckboxes() {
+    const cls = document.getElementById('classSelect').value;
+    const container = document.getElementById('studentCheckboxContainer');
+    container.innerHTML = '';
+    if (!cls) return;
+
+    const students = studentDatabase.filter(s => s.className === cls);
+    students.forEach(s => {
+      const isChecked = selectedStudentsMap.has(s.id);
+      const displayName = s.name;
+      container.innerHTML += `
+        <label class="checkbox-item">
+          <input type="checkbox" value="${s.id}" ${isChecked ? 'checked' : ''} onchange="onStudentCbChange(this, '${s.id}')">
+          <span class="text-${getHouseKey(s.house)}">${displayName}</span>
+        </label>`;
+    });
+  }
+
+  function selectAllInClass() {
+    const cls = document.getElementById('classSelect').value;
+    if (!cls) { alert('請先選擇班別！'); return; }
+    const students = studentDatabase.filter(s => s.className === cls);
+    students.forEach(s => selectedStudentsMap.set(s.id, s));
+    renderStudentCheckboxes();
+    renderSelectedStudentsZone();
+  }
+
+  function onStudentCbChange(cb, id) {
+    const student = studentDatabase.find(s => s.id === id);
+    if (cb.checked) {
+      selectedStudentsMap.set(id, student);
+    } else {
+      selectedStudentsMap.delete(id);
+    }
+    renderSelectedStudentsZone();
+  }
+
+  function renderSelectedStudentsZone() {
+    const zone = document.getElementById('selectedStudentsZone');
+    document.getElementById('selectedCount').innerText = selectedStudentsMap.size;
+
+    if (selectedStudentsMap.size === 0) {
+      zone.innerHTML = '<span style="color: #64748b; font-size: 0.8rem;">尚未選擇任何學生...</span>';
+      return;
+    }
+
+    zone.innerHTML = '';
+    selectedStudentsMap.forEach((s, id) => {
+      const key = getHouseKey(s.house);
+      const displayName = s.name;
+      zone.innerHTML += `
+        <div class="pill-tag ${key}">
+          ${displayName}
+          <span class="pill-remove" onclick="removeSelectedStudent('${id}')">✕</span>
+        </div>`;
+    });
+  }
+
+  function removeSelectedStudent(id) {
+    selectedStudentsMap.delete(id);
+    renderSelectedStudentsZone();
+    renderStudentCheckboxes();
   }
 
   function requestPasswordModal() {
@@ -339,21 +576,155 @@
     }
   }
 
+  document.getElementById('modalPasswordInput').addEventListener('keyup', function(e) {
+    if (e.key === 'Enter') confirmPasswordModal();
+  });
+
+  // 新增活動項目
+  document.getElementById('addActivityForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const actName = document.getElementById('newActivityName').value.trim();
+    if (!actName) return;
+
+    const userInputPassword = await requestPasswordModal();
+    if (!userInputPassword) return;
+    if (userInputPassword !== MAGIC_NUMBER) {
+      alert('❌ 魔法數字錯誤！無法建立新活動。');
+      return;
+    }
+
+    const actTypeObj = document.querySelector('input[name="activityType"]:checked');
+    const actType = actTypeObj ? actTypeObj.value : '個人修煉';
+
+    await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'addActivity',
+        activityName: actName,
+        activityType: actType
+      })
+    });
+
+    document.getElementById('newActivityName').value = '';
+    loadCloudData();
+    alert(`✨ 成功建立新活動：${actName} (${actType})！`);
+  });
+
+  // 刪除活動項目
+  async function handleDeleteActivity() {
+    const actName = document.getElementById('deleteActivitySelect').value;
+    if (!actName) { alert('請先選擇欲刪除的活動！'); return; }
+
+    const userInputPassword = await requestPasswordModal();
+    if (!userInputPassword) return;
+    if (userInputPassword !== MAGIC_NUMBER) {
+      alert('❌ 魔法數字錯誤！無法刪除活動。');
+      return;
+    }
+
+    await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'deleteActivity',
+        activityName: actName
+      })
+    });
+
+    loadCloudData();
+    alert(`🗑️ 已成功刪除活動：${actName}`);
+  }
+
+  // 頒發分數
   document.getElementById('scoreForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!selectedTeacherName) { alert('🧙‍♂️ 請先選擇導師身分！'); return; }
+
+    if (!selectedTeacherName) {
+      alert('🧙‍♂️ 請先選擇執行政務之導師身分！');
+      return;
+    }
+
     const activity = document.getElementById('activitySelect').value;
     if (!activity) { alert('請先選擇活動！'); return; }
 
     const userInputPassword = await requestPasswordModal();
-    if (!userInputPassword || userInputPassword !== MAGIC_NUMBER) {
+    if (!userInputPassword) return;
+    if (userInputPassword !== MAGIC_NUMBER) {
       alert('❌ 魔法數字錯誤！已取消發放。');
       return;
     }
 
-    alert('📜 發放成功！');
+    const score = parseInt(document.getElementById('scoreInput').value, 10);
+    const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+    const actObj = activitiesList.find(a => (typeof a === 'object' ? a.name : a) === activity);
+    const actType = (actObj && typeof actObj === 'object') ? actObj.type : '魔法社系修煉';
+
+    let records = [];
+
+    if (actType === '魔法社系修煉') {
+      if (selectedHousesSet.size === 0) { alert('請至少選擇一個魔法社系！'); return; }
+      selectedHousesSet.forEach(house => {
+        records.push({
+          id: 'REC_' + Date.now() + '_house_' + house,
+          activity,
+          scoreType: 'house',
+          student: '陣營團體',
+          house,
+          score,
+          timestamp: now,
+          operator: selectedTeacherName
+        });
+      });
+    } else {
+      if (selectedStudentsMap.size === 0) { alert('請至少選擇一位學生！'); return; }
+      const isBoth = (actType === '個人與魔法社系同步修煉');
+
+      selectedStudentsMap.forEach(s => {
+        records.push({
+          id: 'REC_' + Date.now() + '_' + s.id,
+          activity,
+          scoreType: isBoth ? 'both' : 'individual',
+          student: s.id || s.name,
+          house: s.house,
+          score,
+          timestamp: now,
+          operator: selectedTeacherName
+        });
+
+        if (isBoth) {
+          records.push({
+            id: 'REC_' + Date.now() + '_house_' + s.house,
+            activity,
+            scoreType: 'both',
+            student: '陣營團體',
+            house: s.house,
+            score,
+            timestamp: now,
+            operator: selectedTeacherName
+          });
+        }
+      });
+    }
+
+    for (let r of records) {
+      await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'addScore', data: r }) });
+    }
+
+    selectedStudentsMap.clear();
+    renderSelectedStudentsZone();
+    renderStudentCheckboxes();
+    document.getElementById('scoreInput').value = 0;
+
+    alert(`📜 [${selectedTeacherName}] 認證成功！已成功頒發 ${records.length} 筆 Maths Dollars！`);
     loadCloudData();
   });
+
+  function getHouseKey(h) {
+    if (h === '圓滿角') return 'yuanman';
+    if (h === '三思角') return 'sansi';
+    if (h === '方寸角') return 'fangcun';
+    return '';
+  }
 </script>
 </body>
 </html>
