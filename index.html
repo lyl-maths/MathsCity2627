@@ -20,95 +20,126 @@
       background: var(--bg-gradient);
       background-attachment: fixed;
       margin: 0;
-      padding: 12px 12px 80px 12px; /* 底部預留 80px 給手機導覽列 */
+      padding: 16px 16px 80px 16px;
       color: #f8fafc;
       min-height: 100vh;
       box-sizing: border-box;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1800px;
+      width: 100%;
       margin: 0 auto;
     }
 
-    header { text-align: center; margin-bottom: 14px; }
-    header h1 { margin: 4px 0; font-size: 1.5rem; color: var(--primary-blue); }
+    /* 頂部導覽列（電腦/iPad 顯示） */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      flex: 1;
+      min-width: 160px;
+      text-align: center;
+      padding: 12px 14px;
+      background: rgba(51, 65, 85, 0.8);
+      color: #94a3b8;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(8px);
+    }
+    .nav-btn.active {
+      background: #0284c7;
+      color: white;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+    }
+
+    header { text-align: center; margin-bottom: 16px; }
+    header h1 { margin: 6px 0; font-size: 1.8rem; color: var(--primary-blue); }
     
     .role-badge {
       display: inline-block;
       background: rgba(15, 23, 42, 0.8);
       color: #fbbf24;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      padding: 4px 14px;
+      padding: 4px 16px;
       border-radius: 20px;
       border: 1px solid #fbbf24;
     }
 
-    .status-bar { text-align: center; font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+    .status-bar { text-align: center; font-size: 0.85rem; color: #94a3b8; margin-top: 6px; }
 
     /* 三大社系總分卡片 */
     .dashboard-houses {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
+      gap: 12px;
+      margin-bottom: 20px;
       text-align: center;
     }
     .house-card {
-      padding: 10px 4px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      padding: 14px 8px;
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
       color: white;
     }
     .house-card.yuanman { background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); border: 1px solid #f87171; }
     .house-card.sansi { background: linear-gradient(135deg, #92400e 0%, #d97706 100%); border: 1px solid #fbbf24; }
     .house-card.fangcun { background: linear-gradient(135deg, #065f46 0%, #059669 100%); border: 1px solid #34d399; }
-    .house-title { font-size: 0.85rem; font-weight: 800; }
-    .house-score { font-size: 1.5rem; font-weight: 900; margin-top: 2px; }
+    .house-title { font-size: 1rem; font-weight: 800; }
+    .house-score { font-size: 2rem; font-weight: 900; margin-top: 4px; }
 
-    /* 切換頁籤 */
-    .section-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    /* 頁籤按鈕 */
+    .section-tabs { display: flex; gap: 10px; margin-bottom: 18px; }
     .tab-btn {
-      flex: 1; padding: 12px 8px; background: rgba(51, 65, 85, 0.8); color: #94a3b8;
-      border: 1px solid var(--card-border); border-radius: 10px; font-weight: bold; font-size: 0.95rem; cursor: pointer; text-align: center;
+      flex: 1; padding: 14px 12px; background: rgba(51, 65, 85, 0.8); color: #94a3b8;
+      border: 1px solid var(--card-border); border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; text-align: center;
     }
-    .tab-btn.active { background: #0284c7; color: white; border-color: var(--primary-blue); box-shadow: 0 0 12px rgba(56, 189, 248, 0.35); }
+    .tab-btn.active { background: #0284c7; color: white; border-color: var(--primary-blue); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    .grid-row { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .grid-row { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 900px) { .grid-row { grid-template-columns: 1fr 1fr; } }
 
     .card {
-      background: var(--card-bg); padding: 16px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      background: var(--card-bg); padding: 20px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       border: 1px solid var(--card-border); backdrop-filter: blur(12px); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
     }
-    .card h2 { font-size: 1.15rem; margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; color: var(--primary-blue); }
+    .card h2 { font-size: 1.2rem; margin-top: 0; margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; color: var(--primary-blue); }
 
-    .form-group { margin-bottom: 14px; }
+    .form-group { margin-bottom: 16px; }
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; color: #cbd5e1; }
     
     input[type="text"], input[type="number"], select {
       width: 100%; padding: 12px 14px; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 10px; box-sizing: border-box; font-size: 1rem;
     }
 
-    /* 手機快選按鈕 */
+    /* 快選按鈕：大觸控面積 */
     .quick-score-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-    .btn-quick { background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 12px 4px; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+    @media (min-width: 600px) { .quick-score-buttons { grid-template-columns: repeat(6, 1fr); } }
+    .btn-quick { background: #1e293b; color: #f8fafc; border: 1px solid #334155; padding: 14px 6px; border-radius: 10px; font-weight: bold; font-size: 1.05rem; cursor: pointer; }
     .btn-quick.minus { color: #f87171; background: #450a0a; border-color: #991b1b; }
 
-    /* 導師選擇 */
-    .teacher-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
-    .teacher-btn { padding: 12px 6px; border: 1px solid #334155; background: #0f172a; color: #cbd5e1; border-radius: 10px; font-weight: bold; font-size: 0.85rem; cursor: pointer; text-align: center; }
+    /* 導師認證按鈕網格 */
+    .teacher-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 6px; }
+    @media (min-width: 1200px) { .teacher-grid { grid-template-columns: repeat(3, 1fr); } }
+    .teacher-btn { padding: 12px 6px; border: 1px solid #334155; background: #0f172a; color: #cbd5e1; border-radius: 10px; font-weight: bold; font-size: 0.9rem; cursor: pointer; text-align: center; }
     .teacher-btn.selected { background: #0284c7; color: white; border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
 
     .teacher-badge-status { margin-top: 8px; padding: 8px; background: rgba(2, 132, 199, 0.2); border: 1px dashed var(--primary-blue); border-radius: 8px; color: #38bdf8; font-size: 0.85rem; font-weight: bold; text-align: center; display: none; }
 
-    /* 社系與學生選擇 */
     .house-button-group { display: flex; gap: 8px; margin-top: 8px; }
-    .house-btn { flex: 1; padding: 12px 4px; border: 1px solid #334155; background: #0f172a; color: #94a3b8; border-radius: 10px; font-weight: bold; font-size: 0.9rem; cursor: pointer; }
+    .house-btn { flex: 1; padding: 12px 4px; border: 1px solid #334155; background: #0f172a; color: #94a3b8; border-radius: 10px; font-weight: bold; font-size: 0.95rem; cursor: pointer; }
     .house-btn.selected.yuanman { background: #991b1b; color: white; border-color: #f87171; }
     .house-btn.selected.sansi { background: #92400e; color: white; border-color: #fbbf24; }
     .house-btn.selected.fangcun { background: #065f46; color: white; border-color: #34d399; }
@@ -129,17 +160,18 @@
     .checkbox-type-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; color: #f8fafc; cursor: pointer; }
     .checkbox-type-item input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary-blue); }
 
-    button.submit-btn { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; min-height: 52px; font-size: 1.1rem; border-radius: 12px; margin-top: 16px; width: 100%; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+    button.submit-btn { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; min-height: 52px; font-size: 1.15rem; border-radius: 12px; margin-top: 16px; width: 100%; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
     .btn-add { background: #059669; color: white; border: none; font-weight: bold; cursor: pointer; min-height: 48px; font-size: 1rem; border-radius: 10px; margin-top: 12px; width: 100%; }
     .btn-delete { background: #dc2626; color: white; font-weight: bold; border: none; min-height: 48px; font-size: 1rem; border-radius: 10px; margin-top: 12px; cursor: pointer; width: 100%; }
 
     .btn-action-small { width: auto; padding: 6px 10px; font-size: 0.8rem; background: #334155; color: white; border-radius: 6px; border: 1px solid #475569; cursor: pointer; }
 
-    /* 手機 APP 底部導覽列 */
+    /* 手機 APP 固定底部導覽列 (僅在 <=768px 顯示) */
     .mobile-bottom-nav {
+      display: none;
       position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
       background: rgba(15, 23, 42, 0.95); border-top: 1px solid var(--card-border);
-      backdrop-filter: blur(16px); display: flex; justify-content: space-around; align-items: center; z-index: 999;
+      backdrop-filter: blur(16px); justify-content: space-around; align-items: center; z-index: 999;
     }
     .mobile-nav-item {
       flex: 1; text-align: center; color: #94a3b8; text-decoration: none; font-size: 0.75rem; font-weight: bold;
@@ -147,6 +179,15 @@
     }
     .mobile-nav-item.active { color: var(--primary-blue); }
     .mobile-nav-icon { font-size: 1.2rem; }
+
+    /* RWD 媒體查詢：手機端排版專用 */
+    @media (max-width: 768px) {
+      body { padding-bottom: 75px; }
+      .nav-bar { display: none; }
+      .mobile-bottom-nav { display: flex; }
+      header h1 { font-size: 1.4rem; }
+      .house-score { font-size: 1.5rem; }
+    }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -163,6 +204,13 @@
 <body>
 
 <div class="container">
+  <!-- 電腦/iPad 頂部導覽列 -->
+  <div class="nav-bar">
+    <a href="leaderboard.html" class="nav-btn">🏰 魔法學園 Maths Dollars 排行榜 🔮</a>
+    <a href="index.html" class="nav-btn active">🏰 魔法學園：Maths Dollars 管理系統 🔮</a>
+    <a href="analytics.html" class="nav-btn">🏰 魔法學徒數據查詢 📊</a>
+  </div>
+
   <header>
     <h1>🏰 魔法學園：Maths Dollars 管理系統 🔮</h1>
     <div class="role-badge">🧙‍♂️ 執行政務導師專用</div>
@@ -184,13 +232,11 @@
     </div>
   </div>
 
-  <!-- 頂部頁籤 -->
   <div class="section-tabs">
     <button type="button" class="tab-btn active" onclick="switchTab('tabScore')">📜 頒發與發放 Maths Dollars</button>
     <button type="button" class="tab-btn" onclick="switchTab('tabActivity')">⚙️ 活動項目管理 (新增/刪除)</button>
   </div>
 
-  <!-- 頁籤 1: 頒發與發放 Maths Dollars -->
   <div id="tabScore" class="tab-content active">
     <form id="scoreForm">
       <div class="grid-row">
@@ -222,7 +268,7 @@
           </div>
 
           <div class="form-group">
-            <label>3. 執行政務之導師認證</label>
+            <label>3. 執行政務導師認證</label>
             <div class="teacher-grid">
               <button type="button" class="teacher-btn" onclick="selectTeacher('🔴 郭老師', this)">🔴 郭老師</button>
               <button type="button" class="teacher-btn" onclick="selectTeacher('🔴 周老師', this)">🔴 周老師</button>
@@ -279,7 +325,6 @@
     </form>
   </div>
 
-  <!-- 頁籤 2: 活動項目管理 (已完整復原) -->
   <div id="tabActivity" class="tab-content">
     <div class="grid-row">
       <div class="card">
@@ -323,7 +368,7 @@
   </div>
 </div>
 
-<!-- 底部固定 APP 手機導覽列 -->
+<!-- 手機 APP 固定底部導覽列 -->
 <div class="mobile-bottom-nav">
   <a href="leaderboard.html" class="mobile-nav-item">
     <span class="mobile-nav-icon">🏆</span>
@@ -339,7 +384,6 @@
   </a>
 </div>
 
-<!-- 密碼驗證彈窗 -->
 <div class="modal-overlay" id="passwordModal">
   <div class="modal-card">
     <h3>🔒 導師安全驗證</h3>
@@ -580,7 +624,6 @@
     if (e.key === 'Enter') confirmPasswordModal();
   });
 
-  // 新增活動項目
   document.getElementById('addActivityForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const actName = document.getElementById('newActivityName').value.trim();
@@ -610,7 +653,6 @@
     alert(`✨ 成功建立新活動：${actName} (${actType})！`);
   });
 
-  // 刪除活動項目
   async function handleDeleteActivity() {
     const actName = document.getElementById('deleteActivitySelect').value;
     if (!actName) { alert('請先選擇欲刪除的活動！'); return; }
@@ -634,7 +676,6 @@
     alert(`🗑️ 已成功刪除活動：${actName}`);
   }
 
-  // 頒發分數
   document.getElementById('scoreForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
