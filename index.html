@@ -330,7 +330,7 @@
             </div>
           </form>
         </div>
-        <button type="submit" form="addActivityForm" class="btn-add">建立新活動</button>
+        <button type="submit" form="addActivityForm" class="btn-add">建立新活動 (需魔法數字)</button>
       </div>
 
       <div class="card">
@@ -587,9 +587,19 @@
     if (e.key === 'Enter') confirmPasswordModal();
   });
 
+  /* ★ 新增：建立新活動加上密碼驗證邏輯 ★ */
   document.getElementById('addActivityForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const actName = document.getElementById('newActivityName').value.trim();
+    if (!actName) return;
+
+    const userInputPassword = await requestPasswordModal();
+    if (!userInputPassword) return;
+    if (userInputPassword !== MAGIC_NUMBER) {
+      alert('❌ 魔法數字錯誤！無法建立新活動。');
+      return;
+    }
+
     const actTypeObj = document.querySelector('input[name="activityType"]:checked');
     const actType = actTypeObj ? actTypeObj.value : '個人修煉';
 
